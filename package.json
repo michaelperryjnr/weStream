@@ -67,5 +67,5 @@
     "url": "https://github.com/michaelperryjnr/weStream/issues"
   },
   "homepage": "https://github.com/michaelperryjnr/weStream#readme",
-  "main": "index.html"
+  "main": "index.js"
 }
