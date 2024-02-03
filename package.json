@@ -2,7 +2,7 @@
   "name": "westream",
   "version": "1.0.0",
   "description": "Movie App",
-  "main" : "index.mjs",
+  "main" : "./src/index.html",
   "scripts": {
     "start": "parcel ./src/index.html",
     "test": "react-scripts test",
