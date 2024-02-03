@@ -10,6 +10,8 @@
 firebase.json
 config.js
 
+/.parcel-cache
+
 # testing
 /coverage
 
