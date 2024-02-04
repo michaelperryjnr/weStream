@@ -1,7 +1,7 @@
 export default interface User {
     username: string,
     id: string,
-    isAdmin: boolean,
+    isAdmin: false,
     isActive: boolean,
     isInSession: boolean,
     isGuest: boolean,
