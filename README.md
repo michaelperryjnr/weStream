@@ -1,1 +1,2 @@
 # weStream
+MERN Movie App
