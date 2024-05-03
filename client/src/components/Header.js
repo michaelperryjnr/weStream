@@ -20,7 +20,7 @@ export default function Header() {
     })
 
   return (
-     <div className="flex items-center justify-between w-full max-w-md mx-auto px-4 py-2 bg-white rounded-lg shadow-md dark:bg-gray-900 mt-4">
+     <div className="flex items-center justify-between w-full max-w-md mx-auto px-4 py-2 bg-slate-900 rounded-lg shadow-md dark:bg-gray-900 mt-4">
        <form
          className="flex items-center flex-1"
          onSubmit={formik.handleSubmit}
@@ -40,7 +40,7 @@ export default function Header() {
          </button>
        </form>
        <div className="ml-4">
-         <div className="w-8 h-8 rounded-full">
+         <div className="w-8 h-8 rounded-full border-2 border-blue-800">
            <img alt="Profile" src={avatar} />
          </div>
        </div>
