@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import movie from "../assets/movie.jpg";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useAsyncError } from "react-router-dom";
 import "../Pages/Movies/[movieId]";
 import getDiscover from "../helper/helper";
 
@@ -11,6 +11,7 @@ const Preview = () => {
   const [title, setTitle] = useState("Title");
   const [overview, setOverView] = useState("");
   const [discoverImg, setDiscoverImg] = useState(movie);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,9 @@ const Preview = () => {
       const firstMovieImg = discover.results[0].poster_path
         ? `https://image.tmdb.org/t/p/w500${discover.results[0].poster_path}`
         : movie;
+      const firstMovieRating =
+        Math.ceil(discover.results[0].vote_average / 2) || 0;
+      setRating(firstMovieRating);
       setOverView(firstMovieTitleOverView);
       setTitle(firstMovieTitle);
       setDiscoverImg(firstMovieImg);
@@ -46,29 +50,30 @@ const Preview = () => {
 
   const { results = [] } = discover || { results: [] };
 
+ const renderRating = useEffect(() => {
+    for (let i = 1; i <= rating; i++) {
+      return <StarIcon className="w-5 h-5 fill-yellow-500" />;
+    };
+      
+  }, [rating]);
+
   return (
     <>
       <section
-        className="relative w-full h-[80vh] md:h-[80vh] bg-cover bg-center bg-no-repeat rounded-3xl overflow-hidden"
+        className="relative w-full h-[80vh] md:h-[80vh] bg-cover bg-center bg-no-repeat rounded-3xl overflow-hidden mt-[8vh] max-sm:mt-[0]"
         style={{
           backgroundImage: `url(${discoverImg || movie})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-        <div className="relative z-10 container px-4 md:px-6 h-full flex flex-col justify-end items-start gap-4 text-white lg:py-4">
+        <div className="relative z-10 container px-4 md:px-6 h-full flex flex-col justify-end items-start gap-4 text-white lg:py-4 max-sm:py-4">
           <h1 className="text-3xl md:text-5xl font-bold">{title}</h1>
           <p className="max-w-[600px] text-lg md:text-xl">{overview}</p>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <StarIcon className="w-5 h-5 fill-yellow-500" />
-              <StarIcon className="w-5 h-5 fill-yellow-500" />
-              <StarIcon className="w-5 h-5 fill-yellow-500" />
-              <StarIcon className="w-5 h-5 fill-yellow-500" />
-              <StarIcon className="w-5 h-5 fill-gray-500 stroke-gray-500" />
-            </div>
+            <div className="flex items-center gap-1">{renderRating}</div>
             <span className="text-lg font-medium">4.8</span>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 max-sm:flex-row">
             <button size="lg" variant="primary">
               <PlayIcon className="w-5 h-5 mr-2" />
               Play
@@ -377,9 +382,8 @@ function BookmarkIcon(props) {
     >
       <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
     </svg>
-  )
+  );
 }
-
 
 function HeartIcon(props) {
   return (
@@ -397,9 +401,8 @@ function HeartIcon(props) {
     >
       <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
     </svg>
-  )
+  );
 }
-
 
 function PlayIcon(props) {
   return (
@@ -417,9 +420,8 @@ function PlayIcon(props) {
     >
       <polygon points="6 3 20 12 6 21 6 3" />
     </svg>
-  )
+  );
 }
-
 
 function StarIcon(props) {
   return (
@@ -437,7 +439,7 @@ function StarIcon(props) {
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
-  )
+  );
 }
- 
+
 export default Preview;
