@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import movie from "../assets/movie.jpg";
 import toast from "react-hot-toast";
-import { Link, useAsyncError } from "react-router-dom";
+import { Link, UNSAFE_ViewTransitionContext } from "react-router-dom";
 import "../Pages/Movies/[movieId]";
-import getDiscover from "../helper/helper";
+import { getPopular, getDiscover } from "../helper/helper";
+import PopularMovies from "./PopularItems";
 
 const Preview = () => {
   const [discover, setDiscover] = useState({ results: [], page: 1 });
-
+  const [popular, setPopular] = useState({ results: [], page: 1 });
+  /**Discover Details */
   const [title, setTitle] = useState("Title");
   const [overview, setOverView] = useState("");
   const [discoverImg, setDiscoverImg] = useState(movie);
@@ -50,13 +52,11 @@ const Preview = () => {
 
   const { results = [] } = discover || { results: [] };
 
- const renderRating = useEffect(() => {
+  const renderRating = useEffect(() => {
     for (let i = 1; i <= rating; i++) {
       return <StarIcon className="w-5 h-5 fill-yellow-500" />;
-    };
-      
+    }
   }, [rating]);
-
   return (
     <>
       <section
@@ -90,148 +90,7 @@ const Preview = () => {
         </div>
       </section>
       <section className="py-12 md:py-24 lg:py-32">
-        <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 md:px-6">
-          <div className="relative group overflow-hidden rounded-lg">
-            <Link className="absolute inset-0 z-10" href="#">
-              <span className="sr-only">View</span>
-            </Link>
-            <img
-              alt="Movie 1"
-              className="object-cover w-full h-[400px] sm:h-[500px]"
-              height={600}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/600",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="bg-white p-4 dark:bg-gray-950">
-              <h3 className="font-semibold text-lg md:text-xl">
-                Avengers: Endgame
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Action, Adventure, Drama
-              </p>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="flex items-center gap-0.5">
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-gray-500 stroke-gray-500" />
-                  <StarIcon className="w-5 h-5 fill-gray-500 stroke-gray-500" />
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  8.4
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="relative group overflow-hidden rounded-lg">
-            <Link className="absolute inset-0 z-10" href="#">
-              <span className="sr-only">View</span>
-            </Link>
-            <img
-              alt="Movie 2"
-              className="object-cover w-full h-[400px] sm:h-[500px]"
-              height={600}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/600",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="bg-white p-4 dark:bg-gray-950">
-              <h3 className="font-semibold text-lg md:text-xl">Joker</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Crime, Drama, Thriller
-              </p>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="flex items-center gap-0.5">
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-gray-500 stroke-gray-500" />
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  9.0
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="relative group overflow-hidden rounded-lg">
-            <Link className="absolute inset-0 z-10" href="#">
-              <span className="sr-only">View</span>
-            </Link>
-            <img
-              alt="Movie 3"
-              className="object-cover w-full h-[400px] sm:h-[500px]"
-              height={600}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/600",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="bg-white p-4 dark:bg-gray-950">
-              <h3 className="font-semibold text-lg md:text-xl">Parasite</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Comedy, Drama, Thriller
-              </p>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="flex items-center gap-0.5">
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  9.5
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="relative group overflow-hidden rounded-lg">
-            <Link className="absolute inset-0 z-10" href="#">
-              <span className="sr-only">View</span>
-            </Link>
-            <img
-              alt="Movie 4"
-              className="object-cover w-full h-[400px] sm:h-[500px]"
-              height={600}
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "400/600",
-                objectFit: "cover",
-              }}
-              width={400}
-            />
-            <div className="bg-white p-4 dark:bg-gray-950">
-              <h3 className="font-semibold text-lg md:text-xl">
-                The Dark Knight
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Action, Crime, Drama
-              </p>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="flex items-center gap-0.5">
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-yellow-500" />
-                  <StarIcon className="w-5 h-5 fill-gray-500 stroke-gray-500" />
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  9.0
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PopularMovies />
       </section>
       <section className="py-12 md:py-24 lg:py-32 dark:bg-gray-800">
         <div className="container px-4 md:px-6">
