@@ -1,17 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 
-import './index.css';
-import App from './App';
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+    {/* <Analytics /> */}
+  </React.StrictMode>
+);
 
-const root = document.getElementById('root');
 
-const render = () => {
-  return(
-    <>
-        <App/>
-    </>
-  )
-  }
-
-ReactDOM.render(render(), root);
+//Tailwind scroll bar autohide
+//Remember to add vercel analytics
