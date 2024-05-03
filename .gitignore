@@ -9,7 +9,6 @@
 .pnp.js
 */dist
 firebase.json
-config.js
 
 */.parcel-cache
 
