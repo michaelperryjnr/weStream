@@ -7,8 +7,8 @@ import Footer from "./components/Footer";
 import Categories from "./Pages/Categories/Categories";
 import Trending from "./Pages/Trending/Trending";
 import Movie from "./Pages/Movies/[movieId]";
-import Socials from "./components/Profile";
-import Waitlist from "./Pages/WaitList";
+// import Socials from "./components/Profile";
+// import Waitlist from "./Pages/WaitList";
 
 /** root routes*/
 const router = createBrowserRouter([
