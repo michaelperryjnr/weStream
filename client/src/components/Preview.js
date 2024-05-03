@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import movie from "../assets/movie.jpg";
 import toast from "react-hot-toast";
 import { Link, UNSAFE_ViewTransitionContext } from "react-router-dom";
 import "../Pages/Movies/[movieId]";
 import { getPopular, getDiscover } from "../helper/helper";
-import PopularMovies from "./PopularItems";
+
+// Lazy load the PopularMovies component
+const PopularMovies = lazy(() => import("./PopularItems"));
 
 const Preview = () => {
   const [discover, setDiscover] = useState({ results: [], page: 1 });
-  const [popular, setPopular] = useState({ results: [], page: 1 });
-  /**Discover Details */
   const [title, setTitle] = useState("Title");
   const [overview, setOverView] = useState("");
   const [discoverImg, setDiscoverImg] = useState(movie);
@@ -18,8 +18,7 @@ const Preview = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const discoverData = await getDiscover();
-        console.log(discoverData);
+        const discoverData = await getPopular();
         setDiscover(discoverData);
       } catch (error) {
         console.error("Error fetching discover data:", error);
@@ -52,11 +51,91 @@ const Preview = () => {
 
   const { results = [] } = discover || { results: [] };
 
-  const renderRating = useEffect(() => {
+  const renderRating = useMemo(() => {
+    const stars = [];
     for (let i = 1; i <= rating; i++) {
-      return <StarIcon className="w-5 h-5 fill-yellow-500" />;
+      stars.push(
+        <StarIcon key={`star-${i}`} className="w-5 h-5 fill-yellow-500" />
+      );
     }
+    return stars;
   }, [rating]);
+
+  const getGenres = useMemo(() => {
+    const genres = ["Action", "Adventure", "Drama"]; // Replace with actual genre data
+    return (genreIds) =>
+      genres.filter((genre, index) => genreIds.includes(index));
+  }, []);
+
+  const getStarRating = useMemo(() => {
+    return (rating) => {
+      const fullStars = Math.floor(rating / 2);
+      const hasHalfStar = rating % 2 !== 0;
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+      const stars = [];
+      for (let i = 0; i < fullStars; i++) {
+        stars.push(
+          <StarIcon key={`full-${i}`} className="w-5 h-5 fill-yellow-500" />
+        );
+      }
+      if (hasHalfStar) {
+        stars.push(
+          <StarIcon
+            key="half"
+            className="w-5 h-5 fill-yellow-500 stroke-yellow-500"
+          />
+        );
+      }
+      for (let i = 0; i < emptyStars; i++) {
+        stars.push(
+          <StarIcon
+            key={`empty-${i}`}
+            className="w-5 h-5 fill-gray-500 stroke-gray-500"
+          />
+        );
+      }
+
+      return stars;
+    };
+  }, []);
+
+  const MovieCard = React.memo(({ movie }) => {
+    const { title, poster_path, genre_ids, vote_average } = movie;
+
+    return (
+      <div className="relative group overflow-hidden rounded-lg">
+        <Link className="absolute inset-0 z-10" href={`/movie/${movie.id}`}>
+          <span className="sr-only text-black">View {title}</span>
+        </Link>
+        <img
+          alt={title}
+          className="object-cover w-full h-[400px] sm:h-[500px]"
+          height={600}
+          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          style={{ aspectRatio: "400/600", objectFit: "cover" }}
+          width={400}
+        />
+        <div className="bg-white p-4 dark:bg-gray-950">
+          <h3 className="font-semibold text-lg md:text-xl text-black">
+            {title}
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {getGenres(genre_ids).join(", ")}
+          </p>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-0.5">
+              {getStarRating(vote_average)}
+            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {vote_average}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  });
+
   return (
     <>
       <section
@@ -90,7 +169,9 @@ const Preview = () => {
         </div>
       </section>
       <section className="py-12 md:py-24 lg:py-32">
-        <PopularMovies />
+        <Suspense fallback={<div>Loading...</div>}>
+          <PopularMovies />
+        </Suspense>
       </section>
       <section className="py-12 md:py-24 lg:py-32 dark:bg-gray-800">
         <div className="container px-4 md:px-6">
