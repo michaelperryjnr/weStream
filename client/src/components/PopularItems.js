@@ -91,8 +91,8 @@ const MovieCard = ({ movie }) => {
         style={{ aspectRatio: "400/600", objectFit: "cover" }}
         width={400}
       />
-      <div className="bg-white p-4 dark:bg-gray-950">
-        <h3 className="font-semibold text-lg md:text-xl text-black">{title}</h3>
+      <div className="bg-slate-700 p-4 dark:bg-gray-950">
+        <h3 className="font-semibold text-lg md:text-xl text-white">{title}</h3>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {getGenres(genre_ids).join(", ")}
         </p>
