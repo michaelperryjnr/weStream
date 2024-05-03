@@ -3,6 +3,7 @@ import movie from "../assets/movie.jpg";
 import { Link } from "react-router-dom";
 import Preview from "./Preview";
 
+
 export default function Home() {
   return (
     <>
