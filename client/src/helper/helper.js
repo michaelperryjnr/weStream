@@ -26,3 +26,5 @@ const getDiscover = async () =>  {
 
 
 export default getDiscover;
+
+//change to API key
