@@ -145,12 +145,12 @@ const Preview = () => {
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-        <div className="relative z-10 container px-4 md:px-6 h-full flex flex-col justify-end items-start gap-4 text-white lg:py-4 max-sm:py-4">
+        <div className="relative z-10 container px-4 md:px-6 h-full flex flex-col justify-end items-start gap-4 text-white lg:py-7 max-sm:py-4">
           <h1 className="text-3xl md:text-5xl font-bold">{title}</h1>
           <p className="max-w-[600px] text-lg md:text-xl">{overview}</p>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">{renderRating}</div>
-            <span className="text-lg font-medium">4.8</span>
+            <span className="text-lg font-medium">{rating}</span>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 max-sm:flex-row">
             <button size="lg" variant="primary">
@@ -169,6 +169,7 @@ const Preview = () => {
         </div>
       </section>
       <section className="py-12 md:py-24 lg:py-32">
+        <h2 className="text-center text-3xl mb-6 max-sm:text-2xl font-semibold">Trending Movies</h2>
         <Suspense fallback={<div>Loading...</div>}>
           <PopularMovies />
         </Suspense>
