@@ -28,7 +28,7 @@ export default function Header() {
             <input
               type="text"
               placeholder="Search.."
-              className="text-white bg-slate-700 py-3 px-2 rounded-l-lg focus:bg-slate-500 focus:border-none focus:text-white border-none border-slate-500 lg:w-[600px] md:w-[450px] sm:w-[260px]" {...formik.getFieldProps('search')}
+              className="text-white bg-slate-700 py-3 px-2 rounded-l-lg focus:bg-slate-500 focus:border-none focus:text-white border-none border-slate-500 lg:w-[600px] md:w-[450px] sm:w-[260px] focus:outline-none" {...formik.getFieldProps('search')}
             />
             <button type="submit" className="text-md text-white bg-slate-950 border-solid py-2 px-2 rounded-r-lg border-slate-500 hover:bg-slate-900 overflow-hidden">
               Search
