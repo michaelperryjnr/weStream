@@ -20,32 +20,50 @@ export default function Header() {
     })
 
   return (
-    <>
-    <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <header id="header" className="flex justify-center relative">
-        <nav className="flex flex-row items-center px-3 py-2 gap-4">
-          <form className="inline-flex flex-row" onSubmit={formik.handleSubmit}>
-            <input
-              type="text"
-              placeholder="Search.."
-              className="text-white bg-slate-700 py-3 px-2 rounded-l-lg focus:bg-slate-500 focus:border-none focus:text-white border-none border-slate-500 lg:w-[600px] md:w-[450px] sm:w-[260px] focus:outline-none" {...formik.getFieldProps('search')}
-            />
-            <button type="submit" className="text-md text-white bg-slate-950 border-solid py-2 px-2 rounded-r-lg border-slate-500 hover:bg-slate-900 overflow-hidden">
-              Search
-            </button>
-          </form>
-          <div className="w-1/3 inline-flex items-center gap-1">
-            <img
-              src={avatar}
-              alt="logo"
-              className="w-1/6 border-2 rounded-full border-blue-700 min-w-10 max-w-12 hover:cursor-pointer"
-            />
-            <h4 className="text-white text-sm hover:cursor-pointer">
-              Michael Perry
-            </h4>
-          </div>
-        </nav>
-      </header>
-    </>
-  );
+     <div className="flex items-center justify-between w-full max-w-md mx-auto px-4 py-2 bg-white rounded-lg shadow-md dark:bg-gray-900 mt-4">
+       <form
+         className="flex items-center flex-1"
+         onSubmit={formik.handleSubmit}
+       >
+         <input
+           className="w-full py-2 pr-4 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0 dark:text-gray-100"
+           placeholder="Search..."
+           type="search"
+           {...formik.getFieldProps("search")}
+         />
+         <button
+           className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+           size="icon"
+           variant="ghost"
+         >
+           <SearchIcon className="w-5 h-5" />
+         </button>
+       </form>
+       <div className="ml-4">
+         <div className="w-8 h-8 rounded-full">
+           <img alt="Profile" src={avatar} />
+         </div>
+       </div>
+     </div>
+   );
+}
+
+function SearchIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  )
 }
