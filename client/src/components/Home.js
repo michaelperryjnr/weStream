@@ -10,7 +10,7 @@ export default function Home() {
       <section className="container mx-auto py-6 px-4">
        <Preview></Preview>
       </section>
-      <section className="trending conatiner mx-auto px-6 py-6">
+      {/* <section className="trending conatiner mx-auto px-6 py-6">
         <h1 className="text-3xl font-bold text-center px-6 py-2 lg:text-5xl">
           Trending
         </h1>
@@ -139,7 +139,7 @@ export default function Home() {
             View More Categories
           </Link>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }
